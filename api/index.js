@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRouter = require("./routes/auth");
 const connectDB = require("./db/connect");
 
 // Extra security packages
 app.use(express.json());
+app.use(cookieParser(process.env.JWT_SECRET));
 app.use(
   cors({
     credentials: true,
