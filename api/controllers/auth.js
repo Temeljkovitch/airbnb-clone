@@ -42,6 +42,14 @@ const login = async (request, response) => {
     .json(user);
 };
 
+const logout = async (request, response) => {
+  response.cookie("token", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  response.status(200).json({ msg: "User logged out!" });
+};
+
 const getCurrentUser = (request, response) => {
   const { token } = request.signedCookies;
   if (token) {
@@ -55,4 +63,4 @@ const getCurrentUser = (request, response) => {
   }
 };
 
-module.exports = { register, login, getCurrentUser };
+module.exports = { register, login, logout, getCurrentUser };

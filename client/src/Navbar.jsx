@@ -11,10 +11,10 @@ const Navbar = () => {
     <nav>
       {/* Logo */}
       <header className="flex justify-between">
-        <a href="/" className="flex gap-x-2">
-          <FaWater className="w-8 h-8 rotate-1 text-primary" />
-          <span className="text-primary font-semibold text-xl">waterbnd</span>
-        </a>
+        <Link to={"/"} className="flex gap-x-2">
+          <FaWater className="w-8 h-8 rotate-1 text-cyan-600" />
+          <span className="text-cyan-600 font-semibold text-xl">waterbnd</span>
+        </Link>
         {/* Search */}
         <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
           <div>Anywhere</div>
@@ -22,13 +22,13 @@ const Navbar = () => {
           <div>Any week</div>
           <div className="border-l border-gray-300"></div>
           <div>Add guests</div>
-          <button className="bg-primary hover:bg-[#c42d4a] duration-300 text-white p-1 rounded-full">
+          <button className="bg-cyan-600 hover:bg-cyan-700 duration-300 text-white p-1 rounded-full">
             <BiSearch className="w-4 h-4" />
           </button>
         </div>
         {/* Login button */}
         <Link
-          to={"/login"}
+          to={user ? "/account" : "/login"}
           className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 hover:shadow-md duration-300 text-slate-700"
         >
           <FaBars className="w-5 h-5 relative top-[0.10rem] " />

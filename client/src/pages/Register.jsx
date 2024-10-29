@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { customFetch } from "../utils";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -10,18 +11,19 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await customFetch.post("api/v1/auth/register", {
+      await customFetch.post("/api/v1/auth/register", {
         name,
         email,
         password,
       });
+      toast.success("Registration successful!");
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="mt-4 grow flex items-center justify-around">
+    <section className="mt-4 grow flex items-center justify-around">
       <div>
         <h1 className="text-4xl text-center mb-4">Sign up</h1>
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
@@ -43,9 +45,7 @@ const Register = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <button className="primary capitalize hover:bg-[#c42d4a] duration-300">
-            Sign Up
-          </button>
+          <button className="primary">Sign Up</button>
           <div className="text-center py-2 text-slate-500">
             Already have an account?{" "}
             <Link
@@ -57,7 +57,7 @@ const Register = () => {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 
