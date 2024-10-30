@@ -1,17 +1,15 @@
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { customFetch } from "../utils";
+import { PiUser, PiHouseLine, PiCalendarBlank } from "react-icons/pi";
+import Profile from "./Profile";
+import Bookings from "./Bookings";
+import Accommodations from "./Accommodations";
 
 const Account = () => {
   const { user, setUser, loading } = useContext(UserContext);
   let { subpage } = useParams();
   if (subpage === undefined) subpage = "profile";
-
-  const fetchLogout = async () => {
-    await customFetch.post("/api/v1/auth/logout");
-    setUser(null);
-  };
 
   if (loading) {
     return (
@@ -26,9 +24,12 @@ const Account = () => {
   }
 
   const linkClassNames = (linkName = null) => {
-    let classNames = "py-2 px-6";
+    let classNames =
+      "py-2 px-5 rounded-full capitalize flex gap-2 items-center";
     if (linkName === subpage) {
-      classNames += " bg-cyan-600 rounded-full text-white";
+      classNames += " bg-cyan-600 text-white";
+    } else {
+      classNames += " bg-gray-200";
     }
     return classNames;
   };
@@ -37,23 +38,27 @@ const Account = () => {
     <section>
       <nav className="w-full flex justify-center mt-8 gap-2 mb-8">
         <Link className={linkClassNames("profile")} to={"/account"}>
+          <PiUser className="w-5 h-5" />
           My profile
         </Link>
         <Link className={linkClassNames("bookings")} to={"/account/bookings"}>
+          <PiCalendarBlank className="w-5 h-5" />
           My bookings
         </Link>
-        <Link className={linkClassNames("places")} to={"/account/places"}>
-          My accomodations
+        <Link
+          className={linkClassNames("accommodations")}
+          to={"/account/accommodations"}
+        >
+          <PiHouseLine className="w-5 h-5" />
+          My accommodations
         </Link>
       </nav>
-      {subpage === "profile" && (
-        <div className="text-center">
-          Logged in as {user.name} ({user.email})<br />
-          <button onClick={fetchLogout} className="primary max-w-sm mt-2">
-            logout
-          </button>
-        </div>
-      )}
+      {/* My profile subpage */}
+      {subpage === "profile" && <Profile />}
+      {/* My accommodations subpage */}
+      {subpage === "accommodations" && <Accommodations />}
+      {/* My bookings subpage */}
+      {subpage === "bookings" && <Bookings />}
     </section>
   );
 };
