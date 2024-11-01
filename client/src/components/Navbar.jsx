@@ -3,7 +3,7 @@ import { FaBars, FaWater } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../UserContext";
 
 const Navbar = () => {
   const { user } = useContext(UserContext);
@@ -16,11 +16,11 @@ const Navbar = () => {
           <span className="text-cyan-600 font-semibold text-xl">waterbnd</span>
         </Link>
         {/* Search */}
-        <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
+        <div className="flex gap-2 border border-slate-300 rounded-full py-2 px-4 shadow-md shadow-slate-300">
           <div>Anywhere</div>
-          <div className="border-l border-gray-300"></div>
+          <div className="border-l border-slate-300"></div>
           <div>Any week</div>
-          <div className="border-l border-gray-300"></div>
+          <div className="border-l border-slate-300"></div>
           <div>Add guests</div>
           <button className="bg-cyan-600 hover:bg-cyan-700 duration-300 text-white p-1 rounded-full">
             <BiSearch className="w-4 h-4" />
@@ -29,7 +29,7 @@ const Navbar = () => {
         {/* Login button */}
         <Link
           to={user ? "/account" : "/login"}
-          className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 hover:shadow-md duration-300 text-slate-700"
+          className="flex gap-2 border border-slate-300 rounded-full py-2 px-4 hover:shadow-md duration-300 text-slate-700"
         >
           <FaBars className="w-5 h-5 relative top-[0.10rem] " />
           <FaUserCircle className="w-6 h-6 " />

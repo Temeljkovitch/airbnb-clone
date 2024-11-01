@@ -7,7 +7,7 @@ import Bookings from "./Bookings";
 import Accommodations from "./Accommodations";
 
 const Account = () => {
-  const { user, setUser, loading } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   let { subpage } = useParams();
   if (subpage === undefined) subpage = "profile";
 
@@ -25,11 +25,11 @@ const Account = () => {
 
   const linkClassNames = (linkName = null) => {
     let classNames =
-      "py-2 px-5 rounded-full capitalize flex gap-2 items-center";
+      "py-2 px-5 rounded-full capitalize flex gap-2 items-center hover:shadow-md duration-300";
     if (linkName === subpage) {
       classNames += " bg-cyan-600 text-white";
     } else {
-      classNames += " bg-gray-200";
+      classNames += " bg-slate-200";
     }
     return classNames;
   };

@@ -3,12 +3,15 @@ const app = express();
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const authRouter = require("./routes/auth");
 const connectDB = require("./db/connect");
+const authRouter = require("./routes/auth");
+const uploadRouter = require("./routes/upload");
+
 
 // Extra security packages
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   cors({
     credentials: true,
@@ -17,6 +20,7 @@ app.use(
 );
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/upload", uploadRouter);
 
 const port = process.env.PORT || 4000;
 

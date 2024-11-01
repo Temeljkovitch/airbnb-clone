@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Register from "./pages/Register";
 import Account from "./pages/Account";
+import Layout from "./pages/Layout";
 
 function App() {
   return (

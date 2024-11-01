@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
 import { customFetch } from "../utils";
+import { toast } from "react-toastify";
 
 const Profile = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const fetchLogout = async () => {
     await customFetch.post("/api/v1/auth/logout");
     setUser(null);
+    toast.info("Goodbye! Hope to see you again soon.");
   };
 
   return (
