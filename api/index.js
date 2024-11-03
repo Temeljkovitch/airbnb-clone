@@ -7,7 +7,6 @@ const connectDB = require("./db/connect");
 const authRouter = require("./routes/auth");
 const uploadRouter = require("./routes/upload");
 
-
 // Extra security packages
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));

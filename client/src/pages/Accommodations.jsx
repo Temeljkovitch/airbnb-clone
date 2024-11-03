@@ -21,6 +21,15 @@ const Accommodations = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(title);
+    console.log(address);
+    console.log(description);
+    console.log(policies);
+    console.log(images);
+    console.log(checkIn);
+    console.log(checkOut);
+    console.log(numberOfGuests);
+    console.log(amenities);
     try {
     } catch (error) {
       console.log(error);
@@ -40,6 +49,43 @@ const Accommodations = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const uploadImageFromDevice = async (event) => {
+    try {
+      const files = event.target.files;
+      const data = new FormData();
+
+      // Appending each file to the FormData object
+      for (let i = 0; i < files.length; i++) {
+        data.append("images", files[i]);
+      }
+      // Sending the form data to the server
+      const { data: fileNames } = await customFetch.post(
+        "/api/v1/upload/uploadFromDevice",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setImages((previous) => {
+        return [...previous, ...fileNames];
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAmenitiesCheckbox = (event) => {
+    const { name, checked } = event.target;
+    setAmenities(
+      (previous) =>
+        checked
+          ? [...previous, name] // Add amenity if checked
+          : previous.filter((item) => item !== name) // Remove amenity if unchecked
+    );
   };
 
   return (
@@ -100,8 +146,7 @@ const Accommodations = () => {
               {amenitiesList.map((amenity) => {
                 return (
                   <Amenities
-                    selected={amenities}
-                    onChange={(event) => setAmenities(event.target.value)}
+                    handleAmenitiesCheckbox={handleAmenitiesCheckbox}
                     key={amenity.id}
                     amenity={amenity}
                   />
@@ -138,19 +183,30 @@ const Accommodations = () => {
                 Add&nbsp;Image
               </button>
             </div>
+            {/* List of images */}
             <div className="mt-2 grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {images.length > 0 &&
                 images.map((image, index) => {
                   return (
-                    <div key={index} className="rounded-md">
-                      <img src={"http://localhost:4000/uploads/" + image} alt="" />
+                    <div className="h-32 flex" key={index}>
+                      <img
+                        className="w-full object-cover rounded-md"
+                        src={"http://localhost:4000/uploads/" + image}
+                      />
                     </div>
                   );
                 })}
-              <button className="flex items-center justify-center gap-2 border bg-transparent rounded-md p-8 text-2xl text-slate-600 hover:bg-cyan-600 duration-300 hover:text-white">
+              {/* Upload from device button */}
+              <label className="h-32 flex items-center justify-center gap-2 cursor-pointer border bg-transparent rounded-md p-8 text-2xl text-slate-600 hover:bg-cyan-600 duration-300 hover:text-white">
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  onChange={uploadImageFromDevice}
+                />
                 <TbUpload />
                 Upload
-              </button>
+              </label>
             </div>
             {/* Check-in, Checkout and Number of Guests */}
             <h2 className="text-2xl mt-4">Check-in & Checkout</h2>
@@ -160,8 +216,9 @@ const Accommodations = () => {
             <div className="grid gap-2 sm:grid-cols-3">
               <div>
                 <h3 className="mt-2 ml-0.5">Check-in time:</h3>
+
                 <input
-                  type="text"
+                  type="time"
                   value={checkIn}
                   onChange={(event) => setCheckIn(event.target.value)}
                   placeholder="After 3:00 PM"
@@ -170,7 +227,7 @@ const Accommodations = () => {
               <div>
                 <h3 className="mt-2 ml-0.5">Checkout time:</h3>
                 <input
-                  type="text"
+                  type="time"
                   value={checkOut}
                   onChange={(event) => setCheckOut(event.target.value)}
                   placeholder="Before 11:00 AM"
@@ -188,7 +245,7 @@ const Accommodations = () => {
             </div>
 
             <div className="my-4">
-              <button className="primary">Save</button>
+              <button className="primary !rounded-md">Save</button>
             </div>
           </form>
         </div>
