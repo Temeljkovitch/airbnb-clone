@@ -1,9 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import Index from "./pages/Index";
+import Index from "./pages/Home";
 import Register from "./pages/Register";
 import Account from "./pages/Account";
 import Layout from "./pages/Layout";
+import Accommodations from "./pages/Accommodations";
+import AccommodationForm from "./pages/AccommodationForm";
+import Bookings from "./pages/Bookings";
 
 function App() {
   return (
@@ -12,8 +15,17 @@ function App() {
         <Route index element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/account/:subpage?" element={<Account />} />
-        <Route path="/account/:subpage/:action" element={<Account />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/account/accommodations" element={<Accommodations />} />
+        <Route
+          path="/account/accommodations/new"
+          element={<AccommodationForm />}
+        />
+        <Route
+          path="/account/accommodations/:id"
+          element={<AccommodationForm />}
+        />
+        <Route path="/account/bookings" element={<Bookings />} />
       </Route>
     </Routes>
   );

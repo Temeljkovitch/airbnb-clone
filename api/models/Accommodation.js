@@ -1,11 +1,16 @@
 const mongoose = require("mongoose");
 
-const RoomSchema = new mongoose.Schema({
+const AccommodationSchema = new mongoose.Schema({
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   title: {
     type: String,
     required: [true, "Please, provide a title!"],
   },
-  location: {
+  address: {
     type: String,
     required: [true, "Please, provide a location!"],
   },
@@ -26,11 +31,11 @@ const RoomSchema = new mongoose.Schema({
     required: true,
   },
   checkIn: {
-    type: Date,
+    type: String,
     required: [true, "Please, provide a check-in date!"],
   },
   checkOut: {
-    type: Date,
+    type: String,
     required: [true, "Please, provide a checkout date!"],
   },
   numberOfGuests: {
@@ -39,4 +44,4 @@ const RoomSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Room", RoomSchema);
+module.exports = mongoose.model("Accommodation", AccommodationSchema);

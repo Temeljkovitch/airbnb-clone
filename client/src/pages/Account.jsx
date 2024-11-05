@@ -1,15 +1,18 @@
 import { useContext } from "react";
 import { UserContext } from "../UserContext";
-import { Link, Navigate, useParams } from "react-router-dom";
-import { PiUser, PiHouseLine, PiCalendarBlank } from "react-icons/pi";
-import Profile from "./Profile";
-import Bookings from "./Bookings";
-import Accommodations from "./Accommodations";
+import { Navigate } from "react-router-dom";
+import { customFetch } from "../utils";
+import { toast } from "react-toastify";
+import AccountNavbar from "../components/AccountNavbar";
 
 const Account = () => {
-  const { user, loading } = useContext(UserContext);
-  let { subpage } = useParams();
-  if (subpage === undefined) subpage = "profile";
+  const { user, setUser, loading } = useContext(UserContext);
+
+  const fetchLogout = async () => {
+    await customFetch.post("/api/v1/auth/logout");
+    setUser(null);
+    toast.info("Goodbye! Hope to see you again soon.");
+  };
 
   if (loading) {
     return (
@@ -23,42 +26,16 @@ const Account = () => {
     return <Navigate to={"/login"} />;
   }
 
-  const linkClassNames = (linkName = null) => {
-    let classNames =
-      "py-2 px-5 rounded-full capitalize flex gap-2 items-center hover:shadow-md duration-300";
-    if (linkName === subpage) {
-      classNames += " bg-cyan-600 text-white";
-    } else {
-      classNames += " bg-slate-200";
-    }
-    return classNames;
-  };
-
   return (
     <section>
-      <nav className="w-full flex justify-center mt-8 gap-2 mb-8">
-        <Link className={linkClassNames("profile")} to={"/account"}>
-          <PiUser className="w-5 h-5" />
-          My profile
-        </Link>
-        <Link className={linkClassNames("bookings")} to={"/account/bookings"}>
-          <PiCalendarBlank className="w-5 h-5" />
-          My bookings
-        </Link>
-        <Link
-          className={linkClassNames("accommodations")}
-          to={"/account/accommodations"}
-        >
-          <PiHouseLine className="w-5 h-5" />
-          My accommodations
-        </Link>
-      </nav>
-      {/* My profile subpage */}
-      {subpage === "profile" && <Profile />}
-      {/* My accommodations subpage */}
-      {subpage === "accommodations" && <Accommodations />}
-      {/* My bookings subpage */}
-      {subpage === "bookings" && <Bookings />}
+      <AccountNavbar />
+
+      <div className="text-center">
+        Logged in as {user.name} ({user.email})<br />
+        <button onClick={fetchLogout} className="primary max-w-sm mt-2">
+          logout
+        </button>
+      </div>
     </section>
   );
 };

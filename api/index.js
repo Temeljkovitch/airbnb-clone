@@ -6,6 +6,7 @@ const cors = require("cors");
 const connectDB = require("./db/connect");
 const authRouter = require("./routes/auth");
 const uploadRouter = require("./routes/upload");
+const bookingRouter = require("./routes/booking");
 
 // Extra security packages
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use(
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/upload", uploadRouter);
+app.use("/api/v1/booking", bookingRouter);
 
 const port = process.env.PORT || 4000;
 
