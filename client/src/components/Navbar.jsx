@@ -3,7 +3,7 @@ import { FaBars, FaWater } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../utils/UserContext";
 
 const Navbar = () => {
   const { user } = useContext(UserContext);

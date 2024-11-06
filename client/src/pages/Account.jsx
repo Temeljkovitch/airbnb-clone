@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../utils/UserContext";
 import { Navigate } from "react-router-dom";
-import { customFetch } from "../utils";
+import { customFetch } from "../utils/customFetch";
 import { toast } from "react-toastify";
 import AccountNavbar from "../components/AccountNavbar";
 

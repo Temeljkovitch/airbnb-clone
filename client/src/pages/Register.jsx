@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { customFetch } from "../utils";
+import { Link, useNavigate } from "react-router-dom";
+import { customFetch } from "../utils/customFetch";
 import { toast } from "react-toastify";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,6 +18,7 @@ const Register = () => {
         password,
       });
       toast.success("Registration successful!");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }

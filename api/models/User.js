@@ -22,11 +22,6 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Please, provide a password!"],
     minlength: 6,
   },
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: true,
-  },
 });
 
 UserSchema.pre("save", async function () {

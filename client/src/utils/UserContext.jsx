@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { customFetch } from "./utils";
+import { customFetch } from "./customFetch";
 
 export const UserContext = createContext();
 

@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TbUpload } from "react-icons/tb";
 import Amenities from "../components/Amenities";
-import { amenitiesList } from "../data";
+import { amenitiesList } from "../utils/data";
 import FormSection from "../components/FormSection";
-import { customFetch } from "../utils";
-import { Navigate, useParams } from "react-router-dom";
+import { customFetch } from "../utils/customFetch";
+import { useNavigate, useParams } from "react-router-dom";
 import AccountNavbar from "../components/AccountNavbar";
+import { toast } from "react-toastify";
 
 const AccommodationForm = () => {
   const { id } = useParams();
-  console.log(id);
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [images, setImages] = useState([]);
@@ -20,12 +20,14 @@ const AccommodationForm = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(1);
-  const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await customFetch.post("/api/v1/booking/accommodations", {
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    customFetch(`api/v1/booking/accommodations/${id}`).then(({ data }) => {
+      const {
         title,
         address,
         images,
@@ -35,10 +37,46 @@ const AccommodationForm = () => {
         checkIn,
         checkOut,
         numberOfGuests,
+      } = data;
+      setTitle(title);
+      setAddress(address);
+      setImages(images);
+      setDescription(description);
+      setAmenities(amenities);
+      setPolicies(policies);
+      setCheckIn(checkIn);
+      setCheckOut(checkOut);
+      setNumberOfGuests(numberOfGuests);
+    });
+  }, [id]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const accommodationData = {
+      title,
+      address,
+      images,
+      description,
+      amenities,
+      policies,
+      checkIn,
+      checkOut,
+      numberOfGuests,
+    };
+    // if there's an id, it means we're updating the accomodation
+    if (id) {
+      await customFetch.put("/api/v1/booking/accommodations", {
+        id,
+        ...accommodationData,
       });
-      setRedirect(true);
-    } catch (error) {
-      console.log(error);
+      toast.success("All changes have been saved!");
+    } else {
+      // if there's no id, we're creating a new accommodation
+      await customFetch.post(
+        "/api/v1/booking/accommodations",
+        accommodationData
+      );
+      navigate("/account/accommodations");
     }
   };
 
@@ -94,10 +132,6 @@ const AccommodationForm = () => {
     );
   };
 
-  if (redirect) {
-    return <Navigate to={"/account/accommodations"} />;
-  }
-
   return (
     <div>
       <AccountNavbar />
@@ -150,6 +184,7 @@ const AccommodationForm = () => {
                   handleAmenitiesCheckbox={handleAmenitiesCheckbox}
                   key={amenity.id}
                   amenity={amenity}
+                  selected={amenities}
                 />
               );
             })}

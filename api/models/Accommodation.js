@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
 const AccommodationSchema = new mongoose.Schema({
-  owner: {
-    type: mongoose.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
   title: {
     type: String,
     required: [true, "Please, provide a title!"],
@@ -41,6 +36,11 @@ const AccommodationSchema = new mongoose.Schema({
   numberOfGuests: {
     type: Number,
     required: [true, "Please, provide the max number of guests!"],
+  },
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
 });
 
