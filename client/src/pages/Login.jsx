@@ -12,6 +12,10 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!email || !password) {
+      toast.error("Please, fill in all fields!");
+      return;
+    }
     try {
       const { data } = await customFetch.post("/api/v1/auth/login", {
         email,
@@ -22,6 +26,8 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+      const errorMessage = error?.response?.data?.message;
+      toast.error(errorMessage);
     }
   };
 

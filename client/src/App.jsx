@@ -7,6 +7,7 @@ import Layout from "./pages/Layout";
 import Accommodations from "./pages/Accommodations";
 import AccommodationForm from "./pages/AccommodationForm";
 import Bookings from "./pages/Bookings";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         />
         <Route path="/account/bookings" element={<Bookings />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

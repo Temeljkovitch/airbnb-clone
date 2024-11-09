@@ -29,8 +29,9 @@ const Accommodations = () => {
         {accommodations.length > 0 &&
           accommodations.map((accommodation) => (
             <Link
+            key={accommodation._id}
               to={"/account/accommodations/" + accommodation._id}
-              className="flex cursor-pointer gap-4 bg-slate-100 p-4 rounded-2xl"
+              className="mt-4 flex cursor-pointer gap-4 bg-slate-200 p-4 rounded-2xl"
             >
               <div className=" bg-slate-200">
                 {accommodation.images.length && (

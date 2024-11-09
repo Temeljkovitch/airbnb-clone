@@ -1,8 +1,15 @@
 const jwt = require("jsonwebtoken");
 const Accommodation = require("../models/Accommodation");
+const { StatusCodes } = require("http-status-codes");
+const ForbiddenError = require("../errors/forbidden");
+const NotFoundError = require("../errors/notFound");
+const UnauthorizedError = require("../errors/unauthorized");
 
 const createAccommodation = async (request, response) => {
   const { token } = request.signedCookies;
+  if (!token) {
+    throw new UnauthorizedError("Authentication invalid!");
+  }
   const payload = jwt.verify(token, process.env.JWT_SECRET);
   const {
     title,
@@ -27,23 +34,29 @@ const createAccommodation = async (request, response) => {
     checkOut,
     numberOfGuests,
   });
-  response.status(201).json({ accommodation });
+  response.status(StatusCodes.CREATED).json({ accommodation });
 };
 
 const getAllAccommodations = async (request, response) => {
   // Getting token from cookies
   const { token } = request.signedCookies;
+  if (!token) {
+    throw new UnauthorizedError("Authentication invalid!");
+  }
   // Getting the payload from the token (id and email)
   const payload = jwt.verify(token, process.env.JWT_SECRET);
   // Finding all accommodations from this user
   const accommodation = await Accommodation.find({ owner: payload.id });
-  response.json(accommodation);
+  response.status(StatusCodes.OK).json(accommodation);
 };
 
 const getAccommodation = async (request, response) => {
   const { id } = request.params;
   const accommodation = await Accommodation.findById(id);
-  response.status(200).json(accommodation);
+  if (!accommodation) {
+    throw new NotFoundError(`No item found with id: ${id}`);
+  }
+  response.status(StatusCodes.OK).json(accommodation);
 };
 
 const updateAccommodation = async (request, response) => {
@@ -64,18 +77,23 @@ const updateAccommodation = async (request, response) => {
   const accommodation = await Accommodation.findOne({ _id: accommodationId });
   // If it doesn't, throw error
   if (!accommodation) {
-    throw new Error(`No accomodation with id ${accommodationId}`);
+    throw new NotFoundError(`No item found with id: ${accommodationId}`);
   }
 
   // Getting token from cookies
   const { token } = request.signedCookies;
+  if (!token) {
+    throw new UnauthorizedError("Authentication invalid!");
+  }
   // Getting the payload from the token (id and email)
   const payload = jwt.verify(token, process.env.JWT_SECRET);
   console.log(payload.id);
 
   // Checking permissions (user's id needs to be the same as the owner's id)
   if (payload.id !== accommodation.owner.toString()) {
-    throw new Error(`Not authorized to access this route!`);
+    throw new ForbiddenError(
+      "You don't have the required permissions to access this route!"
+    );
   }
 
   // Updating each field
@@ -92,7 +110,7 @@ const updateAccommodation = async (request, response) => {
   // Saving alterations
   await accommodation.save();
 
-  response.status(200).json({ msg: "Accommodation updated!" });
+  response.status(StatusCodes.OK).json({ msg: "Accommodation updated!" });
 };
 
 module.exports = {

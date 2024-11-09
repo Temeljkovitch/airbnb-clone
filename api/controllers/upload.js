@@ -1,6 +1,7 @@
 const path = require("path");
 const imageDownloader = require("image-downloader");
-const fs = require("fs");
+const { StatusCodes } = require("http-status-codes");
+const BadRequestError = require("../errors/badRequest");
 
 const uploadImageFromUrl = async (request, response) => {
   const { link } = request.body;
@@ -12,12 +13,15 @@ const uploadImageFromUrl = async (request, response) => {
     dest: path.join(__dirname, ".." + "/uploads/" + imageName),
   });
 
-  response.status(200).json(imageName);
+  response.status(StatusCodes.OK).json(imageName);
 };
 
 const uploadImageFromDevice = (request, response) => {
+  if (!request.files) {
+    throw new BadRequestError("No file uploaded!");
+  }
   const fileNames = request.files.map((file) => file.filename);
-  response.status(200).json(fileNames);
+  response.status(StatusCodes.OK).json(fileNames);
 };
 
 module.exports = { uploadImageFromUrl, uploadImageFromDevice };

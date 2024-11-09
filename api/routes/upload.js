@@ -3,10 +3,10 @@ const {
   uploadImageFromUrl,
   uploadImageFromDevice,
 } = require("../controllers/upload");
-const imagesMiddleware = require("../middleware/image");
+const imageMiddleware = require("../middleware/imageMiddleware");
 const uploadRouter = express.Router();
 
 uploadRouter.post("/uploadFromUrl", uploadImageFromUrl);
-uploadRouter.post("/uploadFromDevice", imagesMiddleware, uploadImageFromDevice);
+uploadRouter.post("/uploadFromDevice", imageMiddleware, uploadImageFromDevice);
 
 module.exports = uploadRouter;

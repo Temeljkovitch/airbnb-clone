@@ -1,13 +1,22 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const UnauthorizedError = require("../errors/unauthorized");
+const BadRequestError = require("../errors/badRequest");
+const { StatusCodes } = require("http-status-codes");
 
 const register = async (request, response) => {
   const { name, email, password } = request.body;
-  console.log(name, email, password);
+
+  const emailAlreadyExists = await User.findOne({ email });
+  if (emailAlreadyExists) {
+    throw new BadRequestError(
+      "An account with this email already exists! Please, log in or use a different email to sign up."
+    );
+  }
 
   const user = await User.create({ name, email, password });
-  response.status(201).json({ user });
+  response.status(StatusCodes.CREATED).json({ user });
 };
 
 const login = async (request, response) => {
@@ -15,15 +24,17 @@ const login = async (request, response) => {
 
   const user = await User.findOne({ email: email });
 
-  // Checking if email is registered
+  // Checking if email is registered in our database
   if (!user) {
-    throw new Error("Email not registered!");
+    throw new UnauthorizedError(
+      "Invalid credentials! Please, check your email and password and try again."
+    );
   }
 
   // Checking if password is correct
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
   if (!isPasswordCorrect) {
-    throw new Error("Wrong password! Please, try again.");
+    throw new UnauthorizedError("Incorrect password!");
   }
 
   // Creating token
@@ -34,6 +45,7 @@ const login = async (request, response) => {
   );
 
   response
+    .status(StatusCodes.OK)
     .cookie("token", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
@@ -48,7 +60,7 @@ const logout = async (request, response) => {
     httpOnly: true,
     expires: new Date(Date.now()),
   });
-  response.status(200).json({ msg: "User logged out!" });
+  response.status(StatusCodes.OK).json({ msg: "User logged out!" });
 };
 
 const getCurrentUser = (request, response) => {
@@ -57,7 +69,7 @@ const getCurrentUser = (request, response) => {
     jwt.verify(token, process.env.JWT_SECRET, {}, async (error, data) => {
       if (error) throw error;
       const { _id, name, email } = await User.findById(data.id);
-      response.json({ name, email, _id });
+      response.status(StatusCodes.OK).json({ name, email, _id });
     });
   } else {
     response.json(null);

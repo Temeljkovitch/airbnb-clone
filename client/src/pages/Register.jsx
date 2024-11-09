@@ -11,6 +11,10 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!name || !email || !password) {
+      toast.error("Please, fill in all fields!");
+      return;
+    }
     try {
       await customFetch.post("/api/v1/auth/register", {
         name,
@@ -21,6 +25,8 @@ const Register = () => {
       navigate("/login");
     } catch (error) {
       console.log(error);
+      const errorMessage = error?.response?.data?.message;
+      toast.error(errorMessage);
     }
   };
 

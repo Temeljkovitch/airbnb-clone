@@ -143,6 +143,7 @@ const AccommodationForm = () => {
         >
           <input
             type="text"
+            required
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             placeholder="Your title goes here..."
@@ -155,6 +156,7 @@ const AccommodationForm = () => {
         >
           <input
             type="text"
+            required
             value={address}
             onChange={(event) => setAddress(event.target.value)}
             placeholder="Your address goes here..."
@@ -167,12 +169,13 @@ const AccommodationForm = () => {
         >
           <textarea
             value={description}
+            required
             onChange={(event) => setDescription(event.target.value)}
             className="py-8"
             placeholder="You description goes here..."
           />
         </FormSection>
-        {/* ==== Description ==== */}
+        {/* ==== Amenities ==== */}
         <FormSection
           title="Amenities"
           subTitle="Select all the amenities your place has to offer."
@@ -193,6 +196,7 @@ const AccommodationForm = () => {
         {/* ==== Policies ==== */}
         <FormSection title="Policies" subTitle="Tell us about your policies.">
           <textarea
+            required
             className="py-8"
             value={policies}
             onChange={(event) => setPolicies(event.target.value)}
@@ -253,6 +257,7 @@ const AccommodationForm = () => {
 
               <input
                 type="time"
+                required
                 value={checkIn}
                 onChange={(event) => setCheckIn(event.target.value)}
                 placeholder="After 3:00 PM"
@@ -262,6 +267,7 @@ const AccommodationForm = () => {
               <h3 className="mt-2 ml-0.5">Checkout time:</h3>
               <input
                 type="time"
+                required
                 value={checkOut}
                 onChange={(event) => setCheckOut(event.target.value)}
                 placeholder="Before 11:00 AM"
