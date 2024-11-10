@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,7 +6,9 @@
 input[type="text"],
 input[type="password"],
 input[type="email"],
-input[type="number"], input[type="time"], textarea,
+input[type="number"],
+input[type="time"],
+textarea,
 select {
   @apply w-full border my-1 py-1 px-3 rounded-md;
 }

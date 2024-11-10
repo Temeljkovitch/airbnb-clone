@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TbUpload } from "react-icons/tb";
+import { FaStar, FaRegStar, FaRegTrashAlt } from "react-icons/fa";
 import Amenities from "../components/Amenities";
 import { amenitiesList } from "../utils/data";
 import FormSection from "../components/FormSection";
@@ -132,6 +133,17 @@ const AccommodationForm = () => {
     );
   };
 
+  const removeImage = (imageName) => {
+    const newImages = images.filter((image) => imageName !== image);
+    setImages(newImages);
+  };
+
+  const selectAsMainImage = (imageName) => {
+    const unselectedImages = images.filter((image) => imageName !== image);
+    const newImages = [imageName, ...unselectedImages];
+    setImages(newImages);
+  };
+
   return (
     <div>
       <AccountNavbar />
@@ -225,11 +237,29 @@ const AccommodationForm = () => {
             {images.length > 0 &&
               images.map((image, index) => {
                 return (
-                  <div className="h-32 flex" key={index}>
+                  <div className="h-32 flex relative" key={index}>
                     <img
                       className="w-full object-cover rounded-md"
                       src={"http://localhost:4000/uploads/" + image}
                     />
+                    {/* Remove image button */}
+                    <button
+                      onClick={() => removeImage(image)}
+                      className="absolute bg-black bg-opacity-70 text-white p-1 rounded-full bottom-1 right-1 cursor-pointer hover:scale-110 duration-200"
+                    >
+                      <FaRegTrashAlt className="h-4 w-4" />
+                    </button>
+                    {/* Select as main image button */}
+                    <button
+                      onClick={() => selectAsMainImage(image)}
+                      className="absolute bg-black bg-opacity-70 text-white p-1 rounded-full bottom-1 left-1 cursor-pointer hover:scale-110 duration-200"
+                    >
+                      {image === images[0] ? (
+                        <FaStar className="h-4 w-4" />
+                      ) : (
+                        <FaRegStar className="h-4 w-4" />
+                      )}
+                    </button>
                   </div>
                 );
               })}

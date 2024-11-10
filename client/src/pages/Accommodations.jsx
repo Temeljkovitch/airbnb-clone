@@ -29,22 +29,22 @@ const Accommodations = () => {
         {accommodations.length > 0 &&
           accommodations.map((accommodation) => (
             <Link
-            key={accommodation._id}
+              key={accommodation._id}
               to={"/account/accommodations/" + accommodation._id}
               className="mt-4 flex cursor-pointer gap-4 bg-slate-200 p-4 rounded-2xl"
             >
-              <div className=" bg-slate-200">
+              <div className=" bg-slate-200 shrink-0">
                 {accommodation.images.length && (
                   <img
-                  className="w-40 h-40 object-cover"
+                    className="w-40 h-40 object-cover"
                     src={
                       "http://localhost:4000/uploads/" + accommodation.images[0]
                     }
-                    alt=""
+                    alt={`${accommodation.title}'s photo`}
                   />
                 )}
               </div>
-              <div >
+              <div>
                 <h2 className="text-xl">{accommodation.title}</h2>
                 <p className="text-sm mt-2">{accommodation.description}</p>
               </div>

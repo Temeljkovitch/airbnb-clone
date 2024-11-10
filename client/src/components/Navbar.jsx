@@ -11,9 +11,9 @@ const Navbar = () => {
     <nav>
       {/* Logo */}
       <header className="flex justify-between">
-        <Link to={"/"} className="flex gap-x-2">
-          <FaWater className="w-8 h-8 rotate-1 text-cyan-600" />
-          <span className="text-cyan-600 font-semibold text-xl">waterbnd</span>
+        <Link to={"/"} className="flex gap-x-2 items-center top-0">
+          <FaWater className="w-8 h-8 text-cyan-600" />
+          <span className="text-cyan-600 font-semibold font-montserrat text-xl">waterbnd</span>
         </Link>
         {/* Search */}
         <div className="flex gap-2 border border-slate-300 rounded-full py-2 px-4 shadow-md shadow-slate-300">
