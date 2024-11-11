@@ -1,5 +1,6 @@
 import { BiSearch } from "react-icons/bi";
-import { FaBars, FaWater } from "react-icons/fa6";
+import { FaBars } from "react-icons/fa6";
+import { IoWaterOutline } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
@@ -10,10 +11,12 @@ const Navbar = () => {
   return (
     <nav>
       {/* Logo */}
-      <header className="flex justify-between">
-        <Link to={"/"} className="flex gap-x-2 items-center top-0">
-          <FaWater className="w-8 h-8 text-cyan-600" />
-          <span className="text-cyan-600 font-semibold font-montserrat text-xl">waterbnd</span>
+      <header className="flex justify-between ">
+        <Link to={"/"} className="flex gap-x-1 items-center top-0">
+          <IoWaterOutline className="w-8 h-8 text-cyan-600" />
+          <span className="text-cyan-600 font-semibold font-montserrat text-2xl">
+            waterbnd
+          </span>
         </Link>
         {/* Search */}
         <div className="flex gap-2 border border-slate-300 rounded-full py-2 px-4 shadow-md shadow-slate-300">

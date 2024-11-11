@@ -21,6 +21,7 @@ const AccommodationForm = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(1);
+  const [price, setPrice] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const AccommodationForm = () => {
         checkIn,
         checkOut,
         numberOfGuests,
+        price,
       } = data;
       setTitle(title);
       setAddress(address);
@@ -48,6 +50,7 @@ const AccommodationForm = () => {
       setCheckIn(checkIn);
       setCheckOut(checkOut);
       setNumberOfGuests(numberOfGuests);
+      setPrice(price);
     });
   }, [id]);
 
@@ -63,6 +66,7 @@ const AccommodationForm = () => {
       checkIn,
       checkOut,
       numberOfGuests,
+      price,
     };
     // if there's an id, it means we're updating the accomodation
     if (id) {
@@ -276,15 +280,14 @@ const AccommodationForm = () => {
             </label>
           </div>
         </FormSection>
-        {/* ==== Check-in, Checkout and Number of Guests ==== */}
+        {/* ==== Check-in, Checkout, Number of Guests and Price ==== */}
         <FormSection
           title="Check-in & Checkout"
           subTitle="What time can the guests arrive and leave?"
         >
-          <div className="grid gap-2 sm:grid-cols-3">
+          <div className="grid gap-2 grid-cols-2 lg:grid-cols-4">
             <div>
               <h3 className="mt-2 ml-0.5">Check-in time:</h3>
-
               <input
                 type="time"
                 required
@@ -310,6 +313,18 @@ const AccommodationForm = () => {
                 min={1}
                 value={numberOfGuests}
                 onChange={(event) => setNumberOfGuests(event.target.value)}
+              />
+            </div>
+            <div>
+              <h3 className="mt-2 ml-0.5">Price per night:</h3>
+
+              <input
+                type="number"
+                min={0}
+                required
+                value={price}
+                onChange={(event) => setPrice(event.target.value)}
+                placeholder=""
               />
             </div>
           </div>

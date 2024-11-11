@@ -21,6 +21,7 @@ const createAccommodation = async (request, response) => {
     checkIn,
     checkOut,
     numberOfGuests,
+    price,
   } = request.body;
   const accommodation = await Accommodation.create({
     owner: payload.id,
@@ -33,11 +34,12 @@ const createAccommodation = async (request, response) => {
     checkIn,
     checkOut,
     numberOfGuests,
+    price,
   });
   response.status(StatusCodes.CREATED).json({ accommodation });
 };
 
-const getAllAccommodations = async (request, response) => {
+const getAllUserAccommodations = async (request, response) => {
   // Getting token from cookies
   const { token } = request.signedCookies;
   if (!token) {
@@ -47,6 +49,12 @@ const getAllAccommodations = async (request, response) => {
   const payload = jwt.verify(token, process.env.JWT_SECRET);
   // Finding all accommodations from this user
   const accommodation = await Accommodation.find({ owner: payload.id });
+  response.status(StatusCodes.OK).json(accommodation);
+};
+
+const getAllAccommodations = async (request, response) => {
+  // Finding all accommodations
+  const accommodation = await Accommodation.find({});
   response.status(StatusCodes.OK).json(accommodation);
 };
 
@@ -72,6 +80,7 @@ const updateAccommodation = async (request, response) => {
     checkIn,
     checkOut,
     numberOfGuests,
+    price,
   } = request.body;
   // Checking if accommodation exists
   const accommodation = await Accommodation.findOne({ _id: accommodationId });
@@ -106,6 +115,7 @@ const updateAccommodation = async (request, response) => {
   accommodation.checkIn = checkIn;
   accommodation.checkOut = checkOut;
   accommodation.numberOfGuests = numberOfGuests;
+  accommodation.price = price;
 
   // Saving alterations
   await accommodation.save();
@@ -115,6 +125,7 @@ const updateAccommodation = async (request, response) => {
 
 module.exports = {
   createAccommodation,
+  getAllUserAccommodations,
   getAllAccommodations,
   getAccommodation,
   updateAccommodation,

@@ -8,7 +8,7 @@ const Accommodations = () => {
   const [accommodations, setAccommodations] = useState([]);
 
   useEffect(() => {
-    customFetch("api/v1/booking/accommodations").then(({ data }) => {
+    customFetch("api/v1/booking/userAccommodations").then(({ data }) => {
       setAccommodations(data);
     });
   }, []);
@@ -25,13 +25,13 @@ const Accommodations = () => {
           Add new place
         </Link>
       </div>
-      <div className="mt-4">
+      <div className="mt-4 ">
         {accommodations.length > 0 &&
           accommodations.map((accommodation) => (
             <Link
               key={accommodation._id}
               to={"/account/accommodations/" + accommodation._id}
-              className="mt-4 flex cursor-pointer gap-4 bg-slate-200 p-4 rounded-2xl"
+              className="mt-4 flex cursor-pointer gap-4 bg-slate-200 p-4 rounded-2xl hover:shadow-md duration-300"
             >
               <div className=" bg-slate-200 shrink-0">
                 {accommodation.images.length && (

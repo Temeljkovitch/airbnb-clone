@@ -37,6 +37,10 @@ const AccommodationSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please, provide the max number of guests!"],
   },
+  price: {
+    type: Number,
+    required: [true, "Please, provide a price!"],
+  },
   owner: {
     type: mongoose.Types.ObjectId,
     ref: "User",
