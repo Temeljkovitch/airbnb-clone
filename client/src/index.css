@@ -8,6 +8,7 @@ input[type="password"],
 input[type="email"],
 input[type="number"],
 input[type="time"],
+input[type="date"],
 textarea,
 select {
   @apply w-full border my-1 py-1 px-3 rounded-md;

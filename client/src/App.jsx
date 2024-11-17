@@ -8,6 +8,7 @@ import Accommodations from "./pages/Accommodations";
 import AccommodationForm from "./pages/AccommodationForm";
 import Bookings from "./pages/Bookings";
 import NotFound from "./pages/NotFound";
+import SingleAccommodation from "./pages/SingleAccommodation";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           element={<AccommodationForm />}
         />
         <Route path="/account/bookings" element={<Bookings />} />
+        <Route path="/accommodation/:id" element={<SingleAccommodation />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

@@ -58,7 +58,7 @@ const getAllAccommodations = async (request, response) => {
   response.status(StatusCodes.OK).json(accommodation);
 };
 
-const getAccommodation = async (request, response) => {
+const getSingleAccommodation = async (request, response) => {
   const { id } = request.params;
   const accommodation = await Accommodation.findById(id);
   if (!accommodation) {
@@ -127,6 +127,6 @@ module.exports = {
   createAccommodation,
   getAllUserAccommodations,
   getAllAccommodations,
-  getAccommodation,
+  getSingleAccommodation,
   updateAccommodation,
 };

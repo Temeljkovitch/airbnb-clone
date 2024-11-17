@@ -17,15 +17,13 @@ const Home = () => {
         accommodations.map((accommodation) => (
           <Link
             key={accommodation._id}
-            to={"/account/accommodations/" + accommodation._id}
+            to={`/accommodation/${accommodation._id}`}
           >
-            <div className="bg-slate-500 mb-2 rounded-2xl flex">
+            <div className="bg-slate-500 mb-2 rounded-xl flex">
               {accommodation.images?.[0] && (
                 <img
                   className="rounded-2xl object-cover aspect-square"
-                  src={
-                    "http://localhost:4000/uploads/" + accommodation.images[0]
-                  }
+                  src={`http://localhost:4000/uploads/${accommodation.images[0]}`}
                   alt={`${accommodation.title}'s photo`}
                 />
               )}
