@@ -43,7 +43,7 @@ const SingleAccommodation = () => {
     <section className="mt-8 p-8">
       <h1 className="text-3xl">{singleAccommodation.title}</h1>
       <a
-        className="flex gap-1 mb-3 items-center my-2 underline"
+        className="inline-flex gap-1 mb-3 items-center my-2 underline"
         target="_blank"
         href={`https://maps.google.com/?q=${singleAccommodation.address}`}
       >
@@ -66,13 +66,15 @@ const SingleAccommodation = () => {
                 />
               ))}
         </div>
-        <button
-          onClick={() => setShowMore(true)}
-          className="absolute bottom-2 right-2 flex items-center gap-1.5 text-sm bg-white bg-opacity-75 hover:bg-opacity-100 duration-300 px-3 py-1 rounded-2xl"
-        >
-          <BsFillGrid3X3GapFill />
-          Show all photos
-        </button>
+        {singleAccommodation.images?.length > 0 && (
+          <button
+            onClick={() => setShowMore(true)}
+            className="absolute bottom-2 right-2 flex items-center gap-1.5 text-sm bg-white bg-opacity-75 hover:bg-opacity-100 duration-300 px-3 py-1 rounded-2xl"
+          >
+            <BsFillGrid3X3GapFill />
+            Show all photos
+          </button>
+        )}
       </div>
       {/* ==== Details ==== */}
       <div className="grid grid-cols-2 gap-4">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { customFetch } from "../utils/customFetch";
 import { Link } from "react-router-dom";
+import defaultImage from "../assets/default-accommodation.png";
 
 const Home = () => {
   const [accommodations, setAccommodations] = useState([]);
@@ -20,11 +21,17 @@ const Home = () => {
             to={`/accommodation/${accommodation._id}`}
           >
             <div className="bg-slate-500 mb-2 rounded-xl flex">
-              {accommodation.images?.[0] && (
+              {accommodation.images?.length > 0 ? (
                 <img
                   className="rounded-2xl object-cover aspect-square"
                   src={`http://localhost:4000/uploads/${accommodation.images[0]}`}
                   alt={`${accommodation.title}'s photo`}
+                />
+              ) : (
+                <img
+                  className="rounded-2xl object-cover aspect-square"
+                  src={defaultImage}
+                  alt="Default accommodation photo"
                 />
               )}
             </div>
