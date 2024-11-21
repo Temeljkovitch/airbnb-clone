@@ -4,6 +4,7 @@ const { StatusCodes } = require("http-status-codes");
 const ForbiddenError = require("../errors/forbidden");
 const NotFoundError = require("../errors/notFound");
 const UnauthorizedError = require("../errors/unauthorized");
+const Booking = require("../models/Booking");
 
 const createAccommodation = async (request, response) => {
   const { token } = request.signedCookies;
@@ -20,7 +21,7 @@ const createAccommodation = async (request, response) => {
     policies,
     checkIn,
     checkOut,
-    numberOfGuests,
+    maxGuests,
     price,
   } = request.body;
   const accommodation = await Accommodation.create({
@@ -33,7 +34,7 @@ const createAccommodation = async (request, response) => {
     policies,
     checkIn,
     checkOut,
-    numberOfGuests,
+    maxGuests,
     price,
   });
   response.status(StatusCodes.CREATED).json({ accommodation });
@@ -79,7 +80,7 @@ const updateAccommodation = async (request, response) => {
     policies,
     checkIn,
     checkOut,
-    numberOfGuests,
+    maxGuests,
     price,
   } = request.body;
   // Checking if accommodation exists
@@ -114,7 +115,7 @@ const updateAccommodation = async (request, response) => {
   accommodation.policies = policies;
   accommodation.checkIn = checkIn;
   accommodation.checkOut = checkOut;
-  accommodation.numberOfGuests = numberOfGuests;
+  accommodation.maxGuests = maxGuests;
   accommodation.price = price;
 
   // Saving alterations
@@ -123,10 +124,31 @@ const updateAccommodation = async (request, response) => {
   response.status(StatusCodes.OK).json({ msg: "Accommodation updated!" });
 };
 
+const bookAccommodation = async (request, response) => {
+  const { _id, checkIn, checkOut, numberOfGuests, price } = request.body;
+  const { token } = request.signedCookies;
+  if (!token) {
+    throw new UnauthorizedError("Authentication invalid!");
+  }
+  const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+  const booking = await Booking.create({
+    user: payload.id,
+    accommodation: _id,
+    checkIn,
+    checkOut,
+    numberOfGuests,
+    price
+  });
+
+  response.status(StatusCodes.OK).json({ booking });
+};
+
 module.exports = {
   createAccommodation,
   getAllUserAccommodations,
   getAllAccommodations,
   getSingleAccommodation,
   updateAccommodation,
+  bookAccommodation,
 };

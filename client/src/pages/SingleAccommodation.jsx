@@ -97,7 +97,7 @@ const SingleAccommodation = () => {
                   Checkout before {singleAccommodation.checkOut}
                 </div>
                 <div className="text-slate-700">
-                  {singleAccommodation.numberOfGuests} guest(s) maximum
+                  {singleAccommodation.maxGuests} guest(s) maximum
                 </div>
               </div>
               <div>
@@ -124,7 +124,7 @@ const SingleAccommodation = () => {
           </div>
         </div>
         {/* Reserve Card */}
-        <ReserveCard price={singleAccommodation.price} />
+        <ReserveCard {...singleAccommodation} />
       </div>
     </section>
   );

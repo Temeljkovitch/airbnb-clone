@@ -5,14 +5,19 @@ const {
   updateAccommodation,
   getAllAccommodations,
   getSingleAccommodation,
+  bookAccommodation,
 } = require("../controllers/booking");
 
 const bookingRouter = express.Router();
 
-bookingRouter.post("/accommodations", createAccommodation);
+bookingRouter
+  .route("/accommodations")
+  .get(getAllAccommodations)
+  .post(createAccommodation)
+  .put(updateAccommodation);
+
 bookingRouter.get("/userAccommodations", getAllUserAccommodations);
-bookingRouter.get("/accommodations", getAllAccommodations);
 bookingRouter.get("/accommodations/:id", getSingleAccommodation);
-bookingRouter.put("/accommodations", updateAccommodation);
+bookingRouter.post("/bookAccommodation", bookAccommodation);
 
 module.exports = bookingRouter;

@@ -39,7 +39,7 @@ const login = async (request, response) => {
 
   // Creating token
   const token = jwt.sign(
-    { id: user._id, email: user.email }, // Attaching user id and email to thje token
+    { id: user._id, name: user.name, email: user.email }, // Attaching user id and email to the token
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_LIFETIME }
   );

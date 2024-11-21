@@ -20,7 +20,7 @@ const AccommodationForm = () => {
   const [policies, setPolicies] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [numberOfGuests, setNumberOfGuests] = useState(1);
+  const [maxGuests, setMaxGuests] = useState(1);
   const [price, setPrice] = useState(0);
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const AccommodationForm = () => {
         policies,
         checkIn,
         checkOut,
-        numberOfGuests,
+        maxGuests,
         price,
       } = data;
       setTitle(title);
@@ -49,7 +49,7 @@ const AccommodationForm = () => {
       setPolicies(policies);
       setCheckIn(checkIn);
       setCheckOut(checkOut);
-      setNumberOfGuests(numberOfGuests);
+      setMaxGuests(maxGuests);
       setPrice(price);
     });
   }, [id]);
@@ -65,7 +65,7 @@ const AccommodationForm = () => {
       policies,
       checkIn,
       checkOut,
-      numberOfGuests,
+      maxGuests,
       price,
     };
     // if there's an id, it means we're updating the accomodation
@@ -311,8 +311,8 @@ const AccommodationForm = () => {
               <input
                 type="number"
                 min={1}
-                value={numberOfGuests}
-                onChange={(event) => setNumberOfGuests(event.target.value)}
+                value={maxGuests}
+                onChange={(event) => setMaxGuests(event.target.value)}
               />
             </div>
             <div>

@@ -33,7 +33,7 @@ const AccommodationSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please, provide a checkout date!"],
   },
-  numberOfGuests: {
+  maxGuests: {
     type: Number,
     required: [true, "Please, provide the max number of guests!"],
   },
