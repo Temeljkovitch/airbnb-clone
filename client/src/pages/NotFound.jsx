@@ -9,7 +9,7 @@ const NotFound = () => {
       </p>
       <Link
         to="/"
-        className="bg-cyan-600 p-2 mt-6 text-white rounded-md capitalize hover:bg-cyan-700 duration-300"
+        className="bg-cyan-600 p-2 mt-6 text-white rounded-md capitalize hover:bg-cyan-700 duration-200"
       >
         Go Back Home
       </Link>

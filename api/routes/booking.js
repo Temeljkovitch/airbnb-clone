@@ -1,23 +1,13 @@
 const express = require("express");
 const {
-  createAccommodation,
-  getAllUserAccommodations,
-  updateAccommodation,
-  getAllAccommodations,
-  getSingleAccommodation,
-  bookAccommodation,
+  createBooking,
+  getAllBookings,
+  getSingleBooking,
 } = require("../controllers/booking");
-
 const bookingRouter = express.Router();
 
-bookingRouter
-  .route("/accommodations")
-  .get(getAllAccommodations)
-  .post(createAccommodation)
-  .put(updateAccommodation);
-
-bookingRouter.get("/userAccommodations", getAllUserAccommodations);
-bookingRouter.get("/accommodations/:id", getSingleAccommodation);
-bookingRouter.post("/bookAccommodation", bookAccommodation);
+bookingRouter.post("/", createBooking);
+bookingRouter.get("/", getAllBookings);
+bookingRouter.get("/:id", getSingleBooking);
 
 module.exports = bookingRouter;

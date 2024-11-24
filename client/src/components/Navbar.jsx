@@ -25,14 +25,14 @@ const Navbar = () => {
           <div>Any week</div>
           <div className="border-l border-slate-300"></div>
           <div>Add guests</div>
-          <button className="bg-cyan-600 hover:bg-cyan-700 duration-300 text-white p-1 rounded-full">
+          <button className="bg-cyan-600 hover:bg-cyan-700 duration-200 text-white p-1 rounded-full">
             <BiSearch className="w-4 h-4" />
           </button>
         </div>
         {/* Login button */}
         <Link
           to={user ? "/account" : "/login"}
-          className="flex gap-2 border border-slate-300 rounded-full py-2 px-4 hover:shadow-md duration-300 text-slate-700"
+          className="flex gap-2 border border-slate-300 rounded-full py-2 px-4 hover:shadow-md duration-200 text-slate-700"
         >
           <FaBars className="w-5 h-5 relative top-[0.10rem] " />
           <FaUserCircle className="w-6 h-6 " />

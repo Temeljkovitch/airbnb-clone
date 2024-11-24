@@ -8,6 +8,7 @@ const connectDB = require("./db/connect");
 
 const authRouter = require("./routes/auth");
 const uploadRouter = require("./routes/upload");
+const accommodationRouter = require("./routes/accommodation");
 const bookingRouter = require("./routes/booking");
 
 const notFoundMiddleware = require("./middleware/notFound");
@@ -26,6 +27,7 @@ app.use(
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/upload", uploadRouter);
+app.use("/api/v1/accommodation", accommodationRouter);
 app.use("/api/v1/booking", bookingRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

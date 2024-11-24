@@ -9,7 +9,7 @@ const AccountNavbar = () => {
   }
   const linkClassNames = (linkName = null) => {
     let classNames =
-      "py-2 px-5 rounded-full capitalize flex gap-2 items-center hover:shadow-md duration-300";
+      "py-2 px-5 rounded-full capitalize flex gap-2 items-center hover:shadow-md duration-200";
     if (linkName === subpage) {
       classNames += " bg-cyan-600 text-white";
     } else {

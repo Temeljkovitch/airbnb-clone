@@ -13,7 +13,7 @@ const SingleAccommodation = () => {
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
-    customFetch(`api/v1/booking/accommodations/${id}`).then(({ data }) => {
+    customFetch(`api/v1/accommodation/${id}`).then(({ data }) => {
       setSingleAccommodation(data);
     });
   }, [id]);
@@ -24,7 +24,7 @@ const SingleAccommodation = () => {
         <div className="bg-black p-8 grid gap-4">
           <button
             onClick={() => setShowMore(false)}
-            className="fixed top-4 flex items-center text-white gap-0.5 px-4 py-1 rounded-xl bg-slate-700 hover:bg-slate-800 duration-300 "
+            className="fixed top-4 flex items-center text-white gap-0.5 px-4 py-1 rounded-xl bg-slate-700 hover:bg-slate-800 duration-200 "
           >
             <IoClose className="w-5 h-5" />
             Close
@@ -69,7 +69,7 @@ const SingleAccommodation = () => {
         {singleAccommodation.images?.length > 0 && (
           <button
             onClick={() => setShowMore(true)}
-            className="absolute bottom-2 right-2 flex items-center gap-1.5 text-sm bg-white bg-opacity-75 hover:bg-opacity-100 duration-300 px-3 py-1 rounded-2xl"
+            className="absolute bottom-2 right-2 flex items-center gap-1.5 text-sm bg-white bg-opacity-75 hover:bg-opacity-100 duration-200 px-3 py-1 rounded-2xl"
           >
             <BsFillGrid3X3GapFill />
             Show all photos

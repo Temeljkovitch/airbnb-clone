@@ -2,6 +2,7 @@ import { useState } from "react";
 import { customFetch } from "../utils/customFetch";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getTomorrowDate, getTotalDays } from "../utils/calculateTotalDays";
 
 const ReserveCard = ({ price, maxGuests, _id }) => {
   const month = new Date().getMonth() + 1;
@@ -14,16 +15,9 @@ const ReserveCard = ({ price, maxGuests, _id }) => {
   const [serviceFee, setServiceFee] = useState(39);
   const navigate = useNavigate();
 
-  const getTotalDays = (checkIn, checkOut) => {
-    const date1 = new Date(checkIn);
-    const date2 = new Date(checkOut);
-    const totalDays = (date2 - date1) / (1000 * 3600 * 24);
-    return totalDays;
-  };
-
   const handleBooking = async () => {
     try {
-      await customFetch.post(`/api/v1/booking/bookAccommodation`, {
+      await customFetch.post(`/api/v1/booking`, {
         _id,
         checkIn,
         checkOut,
@@ -31,8 +25,8 @@ const ReserveCard = ({ price, maxGuests, _id }) => {
         price:
           price * getTotalDays(checkIn, checkOut) + cleaningFee + serviceFee,
       });
-      toast.success("Reservation successful!")
-      navigate(`/account/bookings`);
+      toast.success("Reservation successful!");
+      navigate(`/account/bookings/${_id}`);
     } catch (error) {
       console.log(error);
     }
@@ -50,6 +44,7 @@ const ReserveCard = ({ price, maxGuests, _id }) => {
           value={checkIn}
           onChange={(event) => setCheckIn(event.target.value)}
           type="date"
+          min={new Date().toISOString().split("T")[0]}
         />
       </div>
       <div>
@@ -58,6 +53,7 @@ const ReserveCard = ({ price, maxGuests, _id }) => {
           value={checkOut}
           onChange={(event) => setCheckOut(event.target.value)}
           type="date"
+          min={checkIn ? getTomorrowDate(checkIn) : new Date().toISOString().split("T")[0]}
         />
       </div>
       <div>

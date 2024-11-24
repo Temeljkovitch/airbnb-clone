@@ -4,6 +4,7 @@ const BookingSchema = new mongoose.Schema({
   accommodation: {
     type: mongoose.Types.ObjectId,
     required: true,
+    ref: "Accommodation"
   },
   checkIn: {
     type: Date,

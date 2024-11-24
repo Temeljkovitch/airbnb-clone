@@ -28,7 +28,7 @@ const AccommodationForm = () => {
     if (!id) {
       return;
     }
-    customFetch(`api/v1/booking/accommodations/${id}`).then(({ data }) => {
+    customFetch(`api/v1/accommodation/${id}`).then(({ data }) => {
       const {
         title,
         address,
@@ -70,7 +70,7 @@ const AccommodationForm = () => {
     };
     // if there's an id, it means we're updating the accomodation
     if (id) {
-      await customFetch.put("/api/v1/booking/accommodations", {
+      await customFetch.put("/api/v1/accommodation", {
         id,
         ...accommodationData,
       });
@@ -231,7 +231,7 @@ const AccommodationForm = () => {
             />
             <button
               onClick={addImageFromUrl}
-              className="bg-slate-200 px-4 rounded-md w-auto hover:bg-cyan-600 duration-300 hover:text-white"
+              className="bg-slate-200 px-4 rounded-md w-auto hover:bg-cyan-600 duration-200 hover:text-white"
             >
               Add&nbsp;Image
             </button>
@@ -268,7 +268,7 @@ const AccommodationForm = () => {
                 );
               })}
             {/* Upload from device */}
-            <label className="h-32 flex items-center justify-center gap-2 cursor-pointer border bg-transparent rounded-md p-8 text-2xl text-slate-600 hover:bg-cyan-600 duration-300 hover:text-white">
+            <label className="h-32 flex items-center justify-center gap-2 cursor-pointer border bg-transparent rounded-md p-8 text-2xl text-slate-600 hover:bg-cyan-600 duration-200 hover:text-white">
               <input
                 type="file"
                 multiple

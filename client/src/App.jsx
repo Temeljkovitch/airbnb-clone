@@ -9,6 +9,7 @@ import AccommodationForm from "./pages/AccommodationForm";
 import Bookings from "./pages/Bookings";
 import NotFound from "./pages/NotFound";
 import SingleAccommodation from "./pages/SingleAccommodation";
+import SingleBooking from "./pages/SingleBooking";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           element={<AccommodationForm />}
         />
         <Route path="/account/bookings" element={<Bookings />} />
+        <Route path="/account/bookings/:id" element={<SingleBooking />} />
         <Route path="/accommodation/:id" element={<SingleAccommodation />} />
       </Route>
       <Route path="*" element={<NotFound />} />
