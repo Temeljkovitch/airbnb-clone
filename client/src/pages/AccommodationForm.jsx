@@ -149,7 +149,7 @@ const AccommodationForm = () => {
   };
 
   return (
-    <div>
+    <section>
       <AccountNavbar />
       <form onSubmit={handleSubmit}>
         {/* ==== Title ==== */}
@@ -331,10 +331,10 @@ const AccommodationForm = () => {
         </FormSection>
 
         <div className="my-4">
-          <button className="primary !rounded-md">Save</button>
+          <button className="primary w-full !rounded-md">Save</button>
         </div>
       </form>
-    </div>
+    </section>
   );
 };
 

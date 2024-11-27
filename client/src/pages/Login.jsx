@@ -48,7 +48,7 @@ const Login = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <button className="primary">login</button>
+          <button className="primary w-full">login</button>
           <div className="text-center py-2 text-slate-500">
             Don't have an account yet?{" "}
             <Link

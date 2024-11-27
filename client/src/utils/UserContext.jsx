@@ -5,17 +5,27 @@ export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (!user) {
-      customFetch.get("api/v1/auth/profile").then(({ data }) => {
-        setUser(data);
-        setLoading(false);
-      });
+      const getUser = async () => {
+        setIsLoading(true);
+        try {
+          const { data } = await customFetch("api/v1/auth/profile");
+          setUser(data);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      getUser();
     }
   }, []);
+
   return (
-    <UserContext.Provider value={{ user, setUser, loading }}>
+    <UserContext.Provider value={{ user, setUser, isLoading }}>
       {children}
     </UserContext.Provider>
   );

@@ -9,7 +9,7 @@ const ReserveCard = ({ price, maxGuests, _id }) => {
   const day = new Date().getDate();
   const year = new Date().getFullYear();
   const [checkIn, setCheckIn] = useState(`${year}-${month}-${day}`);
-  const [checkOut, setCheckOut] = useState(`${year}-${month}-${day + 5}`);
+  const [checkOut, setCheckOut] = useState(`${year}-${month}-${day + 3}`);
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [cleaningFee, setCleaningFee] = useState(15);
   const [serviceFee, setServiceFee] = useState(39);
@@ -26,9 +26,11 @@ const ReserveCard = ({ price, maxGuests, _id }) => {
           price * getTotalDays(checkIn, checkOut) + cleaningFee + serviceFee,
       });
       toast.success("Reservation successful!");
-      navigate(`/account/bookings/${_id}`);
+      navigate(`/account/bookings`);
     } catch (error) {
       console.log(error);
+      const errorMessage = error?.response?.data?.message;
+      toast.error("Please, log in to make a reservation!" || errorMessage);
     }
   };
 
@@ -53,7 +55,11 @@ const ReserveCard = ({ price, maxGuests, _id }) => {
           value={checkOut}
           onChange={(event) => setCheckOut(event.target.value)}
           type="date"
-          min={checkIn ? getTomorrowDate(checkIn) : new Date().toISOString().split("T")[0]}
+          min={
+            checkIn
+              ? getTomorrowDate(checkIn)
+              : new Date().toISOString().split("T")[0]
+          }
         />
       </div>
       <div>

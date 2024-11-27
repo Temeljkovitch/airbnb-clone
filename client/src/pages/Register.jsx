@@ -53,7 +53,7 @@ const Register = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <button className="primary">Sign Up</button>
+          <button className="primary w-full">Sign Up</button>
           <div className="text-center py-2 text-slate-500">
             Already have an account?{" "}
             <Link

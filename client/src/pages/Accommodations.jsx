@@ -3,20 +3,36 @@ import { FaPlus } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { customFetch } from "../utils/customFetch";
 import AccountNavbar from "../components/AccountNavbar";
-
 import AccommodationPhoto from "../components/AccommodationPhoto";
+import Loading from "../components/Loading";
 
 const Accommodations = () => {
   const [accommodations, setAccommodations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    customFetch("api/v1/accommodation/userAccommodations").then(({ data }) => {
-      setAccommodations(data);
-    });
+    const fetchUserAccommodations = async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await customFetch(
+          "api/v1/accommodation/userAccommodations"
+        );
+        setAccommodations(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUserAccommodations();
   }, []);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div>
+    <section>
       <AccountNavbar />
       <div className="text-center">
         <Link
@@ -34,9 +50,9 @@ const Accommodations = () => {
               <Link
                 key={accommodation._id}
                 to={`/account/accommodations/${accommodation._id}`}
-                className="mt-4 flex cursor-pointer gap-4 bg-slate-200 p-4 rounded-2xl hover:shadow-md duration-200"
+                className="mt-4 flex cursor-pointer gap-4 bg-slate-100 p-4 rounded-2xl shadow-md hover:shadow-lg duration-200"
               >
-                <div className=" bg-slate-200 shrink-0">
+                <div className="shrink-0">
                   <AccommodationPhoto
                     {...accommodation}
                     classes="w-40 h-40 object-cover rounded-xl"
@@ -50,7 +66,7 @@ const Accommodations = () => {
             );
           })}
       </div>
-    </div>
+    </section>
   );
 };
 

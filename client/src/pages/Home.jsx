@@ -2,21 +2,36 @@ import { useEffect, useState } from "react";
 import { customFetch } from "../utils/customFetch";
 import { Link } from "react-router-dom";
 import AccommodationPhoto from "../components/AccommodationPhoto";
+import Loading from "../components/Loading";
 
 const Home = () => {
   const [accommodations, setAccommodations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    customFetch("api/v1/accommodation").then(({ data }) => {
-      setAccommodations(data);
-    });
+    const fetchAccommodations = async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await customFetch("api/v1/accommodation");
+        setAccommodations(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAccommodations();
   }, []);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="mt-8 grid gap-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <section className="mt-8 grid gap-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {accommodations.length > 0 &&
         accommodations.map((accommodation) => (
-          <Link 
+          <Link
             key={accommodation._id}
             to={`/accommodation/${accommodation._id}`}
           >
@@ -38,7 +53,7 @@ const Home = () => {
             </div>
           </Link>
         ))}
-    </div>
+    </section>
   );
 };
 

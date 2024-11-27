@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { customFetch } from "../utils/customFetch";
-import { BsFillGrid3X3GapFill } from "react-icons/bs";
-import { IoClose } from "react-icons/io5";
+import { IoGridSharp, IoClose } from "react-icons/io5";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import ReserveCard from "../components/ReserveCard";
@@ -13,9 +12,15 @@ const SingleAccommodation = () => {
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
-    customFetch(`api/v1/accommodation/${id}`).then(({ data }) => {
-      setSingleAccommodation(data);
-    });
+    const fetchAccommodation = async () => {
+      try {
+        const { data } = await customFetch(`api/v1/accommodation/${id}`);
+        setSingleAccommodation(data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAccommodation()
   }, [id]);
 
   if (showMore) {
@@ -40,8 +45,10 @@ const SingleAccommodation = () => {
   }
 
   return (
-    <section className="mt-8 p-8">
+    <section className="mt-8">
+      {/* Title */}
       <h1 className="text-3xl">{singleAccommodation.title}</h1>
+      {/* Address */}
       <a
         className="inline-flex gap-1 mb-3 items-center my-2 underline"
         target="_blank"
@@ -50,6 +57,7 @@ const SingleAccommodation = () => {
         <FaMapMarkerAlt className="w-5 h-5" />
         {singleAccommodation.address}
       </a>
+      {/* Photos */}
       <div className="relative">
         <div className="grid grid-cols-4 gap-2 h-full rounded-xl overflow-hidden">
           {singleAccommodation.images?.length > 0 &&
@@ -71,7 +79,7 @@ const SingleAccommodation = () => {
             onClick={() => setShowMore(true)}
             className="absolute bottom-2 right-2 flex items-center gap-1.5 text-sm bg-white bg-opacity-75 hover:bg-opacity-100 duration-200 px-3 py-1 rounded-2xl"
           >
-            <BsFillGrid3X3GapFill />
+            <IoGridSharp />
             Show all photos
           </button>
         )}

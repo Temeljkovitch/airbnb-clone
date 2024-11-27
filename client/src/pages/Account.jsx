@@ -4,9 +4,10 @@ import { Navigate } from "react-router-dom";
 import { customFetch } from "../utils/customFetch";
 import { toast } from "react-toastify";
 import AccountNavbar from "../components/AccountNavbar";
+import Loading from "../components/Loading";
 
 const Account = () => {
-  const { user, setUser, loading } = useContext(UserContext);
+  const { user, setUser, isLoading} = useContext(UserContext);
 
   const fetchLogout = async () => {
     await customFetch.post("/api/v1/auth/logout");
@@ -14,15 +15,9 @@ const Account = () => {
     toast.info("Goodbye! Hope to see you again soon.");
   };
 
-  if (loading) {
-    return (
-      <div className="mx-auto flex mt-24">
-        <div className="w-24 h-24 border-4 border-slate-400 rounded-full border-t-cyan-600 animate-spin"></div>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading />;
 
-  if (!loading && !user) {
+  if (!isLoading && !user) {
     return <Navigate to={"/login"} />;
   }
 
@@ -32,7 +27,10 @@ const Account = () => {
 
       <div className="text-center">
         Logged in as {user.name} ({user.email})<br />
-        <button onClick={fetchLogout} className="primary max-w-sm mt-2">
+        <button
+          onClick={fetchLogout}
+          className="bg-cyan-600 mx-auto w-max py-2 px-6 mt-2 text-white rounded-2xl hover:bg-cyan-700 duration-200 capitalize"
+        >
           logout
         </button>
       </div>
