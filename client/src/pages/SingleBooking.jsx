@@ -2,21 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { customFetch } from "../utils/customFetch";
 import Loading from "../components/Loading";
-import { FaMapMarkerAlt } from "react-icons/fa";
 import AccommodationPhoto from "../components/AccommodationPhoto";
 import { getTotalDays } from "../utils/calculateTotalDays";
 import { IoCalendarNumber } from "react-icons/io5";
-import { FaMoon } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa6";
-import { FaHouse } from "react-icons/fa6";
-import { FaMoneyCheck } from "react-icons/fa";
+import { FaMapMarkerAlt, FaMoon, FaUser, FaMoneyCheck } from "react-icons/fa";
+import { FaUsers, FaHouse } from "react-icons/fa6";
 
 const SingleBooking = () => {
   const { id } = useParams();
   const [singleBooking, setSingleBooking] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  console.log(singleBooking);
 
   useEffect(() => {
     const fetchBooking = async () => {

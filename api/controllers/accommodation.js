@@ -4,7 +4,7 @@ const { StatusCodes } = require("http-status-codes");
 const ForbiddenError = require("../errors/forbidden");
 const NotFoundError = require("../errors/notFound");
 const UnauthorizedError = require("../errors/unauthorized");
-
+const Booking = require("../models/Booking");
 
 const createAccommodation = async (request, response) => {
   // Getting token from cookies
@@ -99,7 +99,6 @@ const updateAccommodation = async (request, response) => {
   }
   // Getting the payload from the token (id and email)
   const payload = jwt.verify(token, process.env.JWT_SECRET);
-  console.log(payload.id);
 
   // Checking permissions (user's id needs to be the same as the owner's id)
   if (payload.id !== accommodation.owner.toString()) {
@@ -126,7 +125,17 @@ const updateAccommodation = async (request, response) => {
   response.status(StatusCodes.OK).json({ msg: "Accommodation updated!" });
 };
 
-
+const removeAccommodation = async (request, response) => {
+  const { id: accommodationId } = request.params;
+  const accommodation = await Accommodation.findByIdAndDelete({
+    _id: accommodationId,
+  });
+  if (!accommodation) {
+    throw new NotFoundError(`No item found with id: ${accommodationId}`);
+  }
+  await Booking.deleteMany({accommodation: accommodationId})
+  response.status(StatusCodes.OK).json({ msg: "Accommodation removed!" });
+};
 
 module.exports = {
   createAccommodation,
@@ -134,4 +143,5 @@ module.exports = {
   getAllAccommodations,
   getSingleAccommodation,
   updateAccommodation,
+  removeAccommodation,
 };

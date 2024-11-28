@@ -2,14 +2,17 @@ import { useState } from "react";
 import { customFetch } from "../utils/customFetch";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getTomorrowDate, getTotalDays } from "../utils/calculateTotalDays";
+import {
+  getFutureDate,
+  getTomorrowDate,
+  getTotalDays,
+} from "../utils/calculateTotalDays";
 
 const ReserveCard = ({ price, maxGuests, _id }) => {
-  const month = new Date().getMonth() + 1;
-  const day = new Date().getDate();
-  const year = new Date().getFullYear();
-  const [checkIn, setCheckIn] = useState(`${year}-${month}-${day}`);
-  const [checkOut, setCheckOut] = useState(`${year}-${month}-${day + 3}`);
+  const [checkIn, setCheckIn] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [checkOut, setCheckOut] = useState(getFutureDate(new Date(), 5));
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [cleaningFee, setCleaningFee] = useState(15);
   const [serviceFee, setServiceFee] = useState(39);

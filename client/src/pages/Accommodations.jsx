@@ -5,6 +5,8 @@ import { customFetch } from "../utils/customFetch";
 import AccountNavbar from "../components/AccountNavbar";
 import AccommodationPhoto from "../components/AccommodationPhoto";
 import Loading from "../components/Loading";
+import { FaTrashAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Accommodations = () => {
   const [accommodations, setAccommodations] = useState([]);
@@ -26,6 +28,20 @@ const Accommodations = () => {
     };
     fetchUserAccommodations();
   }, []);
+
+  const removeAccommodation = async (accommodationId) => {
+    try {
+      await customFetch.delete(`api/v1/accommodation/${accommodationId}`);
+
+      const newAccommodations = accommodations.filter(
+        (accommodation) => accommodation._id !== accommodationId
+      );
+      setAccommodations(newAccommodations);
+      toast.success("Accommodation removed successfully!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -60,7 +76,19 @@ const Accommodations = () => {
                 </div>
                 <div>
                   <h2 className="text-xl">{accommodation.title}</h2>
-                  <p className="text-sm mt-2">{accommodation.description}</p>
+                  <div className="grid grid-cols-8">
+                    <p className="text-sm mt-2 col-span-7">
+                      {accommodation.description}
+                    </p>
+                    <FaTrashAlt
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        removeAccommodation(accommodation._id);
+                      }}
+                      className="w-5 h-5 self-center justify-self-end hover:scale-110 duration-200"
+                    />
+                  </div>
                 </div>
               </Link>
             );

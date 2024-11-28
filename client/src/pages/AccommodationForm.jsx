@@ -78,7 +78,7 @@ const AccommodationForm = () => {
     } else {
       // if there's no id, we're creating a new accommodation
       await customFetch.post(
-        "/api/v1/booking/accommodations",
+        "/api/v1/accommodation",
         accommodationData
       );
       navigate("/account/accommodations");

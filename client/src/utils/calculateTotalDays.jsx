@@ -10,3 +10,9 @@ export const getTomorrowDate = (date) => {
   nextDay.setDate(nextDay.getDate() + 1);
   return nextDay.toISOString().split("T")[0];
 };
+
+export const getFutureDate = (currentDate, daysToAdd) => {
+  const date = new Date(currentDate);
+  date.setDate(date.getDate() + daysToAdd);
+  return date.toISOString().split("T")[0];
+};

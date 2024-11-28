@@ -7,7 +7,7 @@ import AccountNavbar from "../components/AccountNavbar";
 import Loading from "../components/Loading";
 
 const Account = () => {
-  const { user, setUser, isLoading} = useContext(UserContext);
+  const { user, setUser, isLoading } = useContext(UserContext);
 
   const fetchLogout = async () => {
     await customFetch.post("/api/v1/auth/logout");

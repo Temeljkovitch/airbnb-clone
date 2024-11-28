@@ -1,10 +1,11 @@
 const express = require("express");
 const {
-  createAccommodation,
   getAllUserAccommodations,
   updateAccommodation,
   getAllAccommodations,
   getSingleAccommodation,
+  createAccommodation,
+  removeAccommodation,
 } = require("../controllers/accommodation");
 
 const accommodationRouter = express.Router();
@@ -16,6 +17,10 @@ accommodationRouter
   .put(updateAccommodation);
 
 accommodationRouter.get("/userAccommodations", getAllUserAccommodations);
-accommodationRouter.get("/:id", getSingleAccommodation);
+
+accommodationRouter
+  .route("/:id")
+  .get(getSingleAccommodation)
+  .delete(removeAccommodation);
 
 module.exports = accommodationRouter;

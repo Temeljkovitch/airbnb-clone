@@ -31,18 +31,21 @@ const Bookings = () => {
 
   if (bookings.length === 0) {
     return (
-      <section className="mt-8 grid text-center items-center justify-center gap-4">
-        <h1 className="text-lg font-semibold">No trips booked.</h1>
-        <h2>
-          Time to take the suitcase out of the closet and start planning your
-          next escape!
-        </h2>
-        <Link
-          className="bg-cyan-600 mx-auto w-max py-2 px-5 mt-2 text-white rounded-2xl hover:bg-cyan-700 duration-200"
-          to={"/"}
-        >
-          Start looking
-        </Link>
+      <section>
+        <AccountNavbar />
+        <div className="mt-8 grid text-center items-center justify-center gap-4">
+          <h1 className="text-lg font-semibold">No trips booked.</h1>
+          <h2>
+            Time to take the suitcase out of the closet and start planning your
+            next escape!
+          </h2>
+          <Link
+            className="bg-cyan-600 mx-auto w-max py-2 px-5 mt-2 text-white rounded-2xl hover:bg-cyan-700 duration-200"
+            to={"/"}
+          >
+            Start looking
+          </Link>
+        </div>
       </section>
     );
   }
@@ -82,7 +85,8 @@ const Bookings = () => {
                   </h4>
                   <h4>{`${booking.numberOfGuests} guest(s)`}</h4>
                   <h4>
-                    Total: <span className="font-semibold">${booking.price}</span>
+                    Total:{" "}
+                    <span className="font-semibold">${booking.price}</span>
                   </h4>
                 </div>
               </Link>
