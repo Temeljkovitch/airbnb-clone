@@ -18,21 +18,21 @@ const AccountNavbar = () => {
     return classNames;
   };
   return (
-    <nav className="w-full flex justify-center mt-8 gap-2 mb-8">
+    <nav className="w-full flex justify-center mt-8 gap-x-8 sm:gap-x-2 mb-8">
       <Link className={linkClassNames("profile")} to={"/account"}>
         <PiUser className="w-5 h-5" />
-        My profile
+        <span className="hidden sm:block">My profile</span>
       </Link>
       <Link className={linkClassNames("bookings")} to={"/account/bookings"}>
         <PiCalendarBlank className="w-5 h-5" />
-        My bookings
+        <span className="hidden sm:block">My bookings</span>
       </Link>
       <Link
         className={linkClassNames("accommodations")}
         to={"/account/accommodations"}
       >
         <PiHouseLine className="w-5 h-5" />
-        My accommodations
+        <span className="hidden sm:block">My accommodations</span>
       </Link>
     </nav>
   );

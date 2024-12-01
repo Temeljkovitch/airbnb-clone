@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { customFetch } from "../utils/customFetch";
 import { Link } from "react-router-dom";
 import AccommodationPhoto from "../components/AccommodationPhoto";
 import Loading from "../components/Loading";
+import { UserContext } from "../utils/UserContext";
 
 const Home = () => {
   const [accommodations, setAccommodations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { searchQuery } = useContext(UserContext);
 
   useEffect(() => {
     const fetchAccommodations = async () => {
@@ -23,14 +25,20 @@ const Home = () => {
     fetchAccommodations();
   }, []);
 
+  const filteredAccommodations = accommodations.filter((accommodation) =>
+    `${accommodation.title} ${accommodation.address}`
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
+
   if (isLoading) {
     return <Loading />;
   }
 
   return (
-    <section className="mt-8 grid gap-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {accommodations.length > 0 &&
-        accommodations.map((accommodation) => (
+    <section className="mt-8 grid gap-6 gap-y-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {filteredAccommodations.length > 0 &&
+        filteredAccommodations.map((accommodation) => (
           <Link
             key={accommodation._id}
             to={`/accommodation/${accommodation._id}`}
