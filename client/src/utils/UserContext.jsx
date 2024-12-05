@@ -13,7 +13,7 @@ export const UserContextProvider = ({ children }) => {
       const getUser = async () => {
         setIsLoading(true);
         try {
-          const { data } = await customFetch("api/v1/auth/profile");
+          const { data } = await customFetch.get("api/v1/user");
           setUser(data);
         } catch (error) {
           console.log(error);
@@ -26,7 +26,9 @@ export const UserContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, searchQuery, setSearchQuery }}>
+    <UserContext.Provider
+      value={{ user, setUser, isLoading, searchQuery, setSearchQuery }}
+    >
       {children}
     </UserContext.Provider>
   );

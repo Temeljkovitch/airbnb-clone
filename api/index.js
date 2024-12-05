@@ -10,6 +10,7 @@ const authRouter = require("./routes/auth");
 const uploadRouter = require("./routes/upload");
 const accommodationRouter = require("./routes/accommodation");
 const bookingRouter = require("./routes/booking");
+const userRouter = require("./routes/user");
 
 const notFoundMiddleware = require("./middleware/notFound");
 const errorHandlerMiddleware = require("./middleware/errorHandler");
@@ -29,6 +30,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/upload", uploadRouter);
 app.use("/api/v1/accommodation", accommodationRouter);
 app.use("/api/v1/booking", bookingRouter);
+app.use("/api/v1/user", userRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 

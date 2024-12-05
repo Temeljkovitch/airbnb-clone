@@ -1,7 +1,7 @@
 const Booking = require("../models/Booking");
-const UnauthorizedError = require("../errors/unauthorized");
 const { StatusCodes } = require("http-status-codes");
 const jwt = require("jsonwebtoken");
+const UnauthorizedError = require("../errors/unauthorized");
 const NotFoundError = require("../errors/notFound");
 
 const createBooking = async (request, response) => {

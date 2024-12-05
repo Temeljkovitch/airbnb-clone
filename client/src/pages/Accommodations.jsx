@@ -66,24 +66,26 @@ const Accommodations = () => {
               <Link
                 key={accommodation._id}
                 to={`/account/accommodations/${accommodation._id}`}
-                className="mt-4 flex cursor-pointer gap-4 bg-slate-100 p-4 rounded-2xl shadow-md hover:shadow-lg duration-200"
+                className="mt-4 flex flex-col items-center text-center cursor-pointer gap-4 bg-slate-100 p-4 rounded-2xl shadow-md hover:shadow-lg duration-200"
               >
                 <div className="shrink-0">
                   <AccommodationPhoto
                     {...accommodation}
-                    classes="w-40 h-40 object-cover rounded-xl"
+                    classes="w-60 h-40 object-cover rounded-xl"
                   />
                 </div>
-                <div className="grid w-full" >
+                <div className="grid">
                   <h2 className="text-xl">{accommodation.title}</h2>
-                  <p className="text-sm mt-2">{accommodation.description}</p>
+                  <p className="text-sm mt-2 px-0 sm:px-44">
+                    {accommodation.description}
+                  </p>
                   <FaTrashAlt
                     onClick={(event) => {
                       event.preventDefault();
                       event.stopPropagation();
                       removeAccommodation(accommodation._id);
                     }}
-                    className="w-5 h-5 place-self-center hover:scale-110 duration-200"
+                    className="w-5 h-5 mt-4 place-self-center hover:scale-110 duration-200"
                   />
                 </div>
               </Link>

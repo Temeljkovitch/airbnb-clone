@@ -63,17 +63,9 @@ const logout = async (request, response) => {
   response.status(StatusCodes.OK).json({ msg: "User logged out!" });
 };
 
-const getCurrentUser = (request, response) => {
-  const { token } = request.signedCookies;
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, {}, async (error, data) => {
-      if (error) throw error;
-      const { _id, name, email } = await User.findById(data.id);
-      response.status(StatusCodes.OK).json({ name, email, _id });
-    });
-  } else {
-    response.json(null);
-  }
-};
+module.exports = {
+  register,
+  login,
+  logout,
 
-module.exports = { register, login, logout, getCurrentUser };
+};
