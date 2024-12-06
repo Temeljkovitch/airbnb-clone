@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
 const Accommodation = require("../models/Accommodation");
+const Booking = require("../models/Booking");
 const { StatusCodes } = require("http-status-codes");
 const ForbiddenError = require("../errors/forbidden");
 const NotFoundError = require("../errors/notFound");
 const UnauthorizedError = require("../errors/unauthorized");
-const Booking = require("../models/Booking");
 
 const createAccommodation = async (request, response) => {
   // Getting token from cookies
@@ -14,6 +14,10 @@ const createAccommodation = async (request, response) => {
   }
   // Getting the payload from the token (id, name and email)
   const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (payload.role !== "admin") {
+    throw new UnauthorizedError("Only admins can create new accommodations!");
+  }
   const {
     title,
     address,
@@ -133,7 +137,7 @@ const removeAccommodation = async (request, response) => {
   if (!accommodation) {
     throw new NotFoundError(`No item found with id: ${accommodationId}`);
   }
-  await Booking.deleteMany({accommodation: accommodationId})
+  await Booking.deleteMany({ accommodation: accommodationId });
   response.status(StatusCodes.OK).json({ msg: "Accommodation removed!" });
 };
 

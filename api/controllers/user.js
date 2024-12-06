@@ -3,14 +3,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
 const UnauthorizedError = require("../errors/unauthorized");
+const ForbiddenError = require("../errors/forbidden");
 
 const getCurrentUser = (request, response) => {
   const { token } = request.signedCookies;
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, {}, async (error, data) => {
       if (error) throw error;
-      const { _id, name, email } = await User.findById(data.id);
-      response.status(StatusCodes.OK).json({ name, email, _id });
+      const { _id, name, email, role } = await User.findById(data.id);
+      response.status(StatusCodes.OK).json({ name, email, _id, role });
     });
   } else {
     response.json(null);
@@ -25,6 +26,10 @@ const updateUserData = async (request, response) => {
 
   const user = await User.findOne({ _id: payload.id });
 
+  if (user.email === "guest@email.com") {
+    throw new ForbiddenError("Guest user can't update their data!");
+  }
+
   const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
   if (!isPasswordCorrect) {
     throw new UnauthorizedError("Incorrect password!");
@@ -32,7 +37,7 @@ const updateUserData = async (request, response) => {
 
   user.password = newPassword;
   user.name = name;
-  user.email = email
+  user.email = email;
   await user.save();
 
   response

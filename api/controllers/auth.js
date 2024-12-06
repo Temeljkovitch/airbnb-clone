@@ -39,7 +39,7 @@ const login = async (request, response) => {
 
   // Creating token
   const token = jwt.sign(
-    { id: user._id, name: user.name, email: user.email }, // Attaching user id and email to the token
+    { id: user._id, name: user.name, email: user.email, role: user.role }, // Attaching user id and email to the token
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_LIFETIME }
   );
@@ -48,7 +48,7 @@ const login = async (request, response) => {
     .status(StatusCodes.OK)
     .cookie("token", token, {
       httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      expires: new Date(Date.now() + 1000 * 60 * 60),
       secure: process.env.NODE_ENV === "production",
       signed: true,
     })
@@ -67,5 +67,4 @@ module.exports = {
   register,
   login,
   logout,
-
 };

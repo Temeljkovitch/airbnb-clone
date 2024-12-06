@@ -31,6 +31,22 @@ const Login = () => {
     }
   };
 
+  const handleGuestLogin = async () => {
+    try {
+      const { data } = await customFetch.post("/api/v1/auth/login", {
+        email: "guest@email.com",
+        password: "secret",
+      });
+      setUser(data);
+      toast.success(`Welcome back!`);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      const errorMessage = error?.response?.data?.message;
+      toast.error(errorMessage);
+    }
+  };
+
   return (
     <section className="mt-4 grow flex items-center justify-around">
       <div>
@@ -48,7 +64,16 @@ const Login = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-          <button className="primary w-full">login</button>
+          <button type="submit" className="primary w-full">
+            login
+          </button>
+          <button
+            onClick={handleGuestLogin}
+            type="button"
+            className="primary w-full !bg-lime-700 hover:!bg-lime-900"
+          >
+            guest user
+          </button>
           <div className="text-center py-2 text-slate-500">
             Don't have an account yet?{" "}
             <Link

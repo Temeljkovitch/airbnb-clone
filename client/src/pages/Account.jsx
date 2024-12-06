@@ -80,7 +80,7 @@ const Account = () => {
             type="text"
             value={formData.name}
           />
-          <label className="capitalize">email</label>
+          <label className="capitalize">Email</label>
           <input
             onChange={handleChange}
             className="text-slate-700"

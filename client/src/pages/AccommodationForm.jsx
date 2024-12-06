@@ -68,20 +68,23 @@ const AccommodationForm = () => {
       maxGuests,
       price,
     };
-    // if there's an id, it means we're updating the accomodation
-    if (id) {
-      await customFetch.put("/api/v1/accommodation", {
-        id,
-        ...accommodationData,
-      });
-      toast.success("All changes have been saved!");
-    } else {
-      // if there's no id, we're creating a new accommodation
-      await customFetch.post(
-        "/api/v1/accommodation",
-        accommodationData
-      );
-      navigate("/account/accommodations");
+    try {
+      // if there's an id, it means we're updating the accomodation
+      if (id) {
+        await customFetch.put("/api/v1/accommodation", {
+          id,
+          ...accommodationData,
+        });
+        toast.success("All changes have been saved!");
+      } else {
+        // if there's no id, we're creating a new accommodation
+        await customFetch.post("/api/v1/accommodation", accommodationData);
+        navigate("/account/accommodations");
+      }
+    } catch (error) {
+      const errorMessage = error?.response?.data?.message;
+      toast.error(errorMessage);
+      console.log(error);
     }
   };
 
