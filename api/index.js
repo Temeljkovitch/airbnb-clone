@@ -3,8 +3,12 @@ const app = express();
 require("dotenv").config();
 require("express-async-errors");
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
 const connectDB = require("./db/connect");
+const cors = require("cors");
+const rateLimiter = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const mongoSanitize = require("express-mongo-sanitize");
 
 const authRouter = require("./routes/auth");
 const uploadRouter = require("./routes/upload");
@@ -15,10 +19,20 @@ const userRouter = require("./routes/user");
 const notFoundMiddleware = require("./middleware/notFound");
 const errorHandlerMiddleware = require("./middleware/errorHandler");
 
-// Extra security packages
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use("/uploads", express.static(__dirname + "/uploads"));
+// Extra security packages
+app.set("trust proxy", 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 app.use(
   cors({
     credentials: true,
