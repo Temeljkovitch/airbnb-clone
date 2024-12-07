@@ -33,12 +33,24 @@ app.use(
 app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:5173",
-  })
-);
+
+const allowedOrigins = [
+  "http://localhost:5173", // Dev frontend
+  "https://temeljkovitch-waterbnd.netlify.app/", // Deployed frontend
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow request
+    } else {
+      callback(new Error("Not allowed by CORS")); // Block request
+    }
+  },
+  credentials: true, // Allow cookies and credentials
+};
+
+app.use(cors(corsOptions));
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/upload", uploadRouter);
