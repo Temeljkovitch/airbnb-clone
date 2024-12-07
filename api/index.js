@@ -34,15 +34,14 @@ app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
 
-// const corsOptions = {
-//   origin: [
-//     "http://localhost:5173", // Development frontend
-//     "https://temeljkovitch-waterbnd.netlify.app", // Deployed frontend
-//   ],
-//   credentials: true, // Allow cookies and credentials
-// };
-// app.use(cors(corsOptions));
-app.use(cors({ origin: "*", credentials: true }));
+const corsOptions = {
+  origin: [
+    "http://localhost:5173", // Development frontend
+    "https://temeljkovitch-waterbnd.netlify.app", // Deployed frontend
+  ],
+  credentials: true, // Allow cookies and credentials
+};
+app.use(cors(corsOptions));
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/upload", uploadRouter);
