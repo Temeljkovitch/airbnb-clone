@@ -15,12 +15,12 @@ const SingleAccommodation = () => {
     const fetchAccommodation = async () => {
       try {
         const { data } = await customFetch(`api/v1/accommodation/${id}`);
-        setSingleAccommodation(data)
+        setSingleAccommodation(data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchAccommodation()
+    fetchAccommodation();
   }, [id]);
 
   if (showMore) {
@@ -37,7 +37,10 @@ const SingleAccommodation = () => {
 
           {singleAccommodation.images?.length > 0 &&
             singleAccommodation.images.map((image, index) => (
-              <img key={index} src={`http://localhost:4000/uploads/${image}`} />
+              <img
+                key={index}
+                src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${image}`}
+              />
             ))}
         </div>
       </section>
