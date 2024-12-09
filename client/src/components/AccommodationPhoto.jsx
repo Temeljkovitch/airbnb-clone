@@ -9,7 +9,7 @@ const AccommodationPhoto = ({ images, title, classes }) => {
           className={classes}
           src={
             images?.length > 0
-              ? `${import.meta.env.VITE_BACKEND_URL}/${images[0]}`
+              ? `http://localhost:4000/uploads/${images[0]}`
               : defaultImage
           }
           alt={

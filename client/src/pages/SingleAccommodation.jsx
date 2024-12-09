@@ -39,7 +39,7 @@ const SingleAccommodation = () => {
             singleAccommodation.images.map((image, index) => (
               <img
                 key={index}
-                src={`${import.meta.env.VITE_BACKEND_URL}/uploads/${image}`}
+                src={`http://localhost:4000/uploads/${image}`}
               />
             ))}
         </div>

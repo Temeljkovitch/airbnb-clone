@@ -22,6 +22,7 @@ const errorHandlerMiddleware = require("./middleware/errorHandler");
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use("/uploads", express.static(__dirname + "/uploads"));
+
 // Extra security packages
 app.set("trust proxy", 1);
 app.use(

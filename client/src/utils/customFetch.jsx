@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const customFetch = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: "http://localhost:4000/",
   withCredentials: true,
 });
