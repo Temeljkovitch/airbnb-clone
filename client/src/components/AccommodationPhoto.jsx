@@ -9,7 +9,7 @@ const AccommodationPhoto = ({ images, title, classes }) => {
           className={classes}
           src={
             images?.length > 0
-              ? `http://localhost:4000/uploads/${images[0]}`
+              ? `https://airbnb-clone-34rb.onrender.com/uploads/${images[0]}`
               : defaultImage
           }
           alt={

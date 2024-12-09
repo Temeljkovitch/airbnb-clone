@@ -39,7 +39,7 @@ const SingleAccommodation = () => {
             singleAccommodation.images.map((image, index) => (
               <img
                 key={index}
-                src={`http://localhost:4000/uploads/${image}`}
+                src={`https://airbnb-clone-34rb.onrender.com/uploads/${image}`}
               />
             ))}
         </div>
@@ -70,7 +70,7 @@ const SingleAccommodation = () => {
                 <img
                   onClick={() => setShowMore(true)}
                   key={index}
-                  src={`http://localhost:4000/uploads/${image}`}
+                  src={`https://airbnb-clone-34rb.onrender.com/uploads/${image}`}
                   className={`w-full h-full object-cover cursor-pointer ${
                     index === 0 ? "col-span-3 row-span-2" : "col-span-1"
                   }`}

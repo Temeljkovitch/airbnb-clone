@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const customFetch = axios.create({
-  baseURL: "http://localhost:4000/",
+  baseURL: "https://airbnb-clone-34rb.onrender.com/",
   withCredentials: true,
 });

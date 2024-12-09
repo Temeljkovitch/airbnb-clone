@@ -247,7 +247,7 @@ const AccommodationForm = () => {
                   <div className="h-32 flex relative" key={index}>
                     <img
                       className="w-full object-cover rounded-md"
-                      src={`http://localhost:4000/uploads/${image}`}
+                      src={`https://airbnb-clone-34rb.onrender.com/uploads/${image}`}
                     />
                     {/* Remove image button */}
                     <button
