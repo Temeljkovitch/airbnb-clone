@@ -47,10 +47,11 @@ const login = async (request, response) => {
   response
     .status(StatusCodes.OK)
     .cookie("token", token, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 60 * 60),
-      secure: process.env.NODE_ENV === "production",
+      httpOnly: true, // Ensuring cookie is not accessible via JavaScript
+      expires: new Date(Date.now() + 1000 * 60 * 60), // 1h expiration
+      secure: process.env.NODE_ENV === "production", // Only allowing HTTPS 
       signed: true,
+      sameSite: "none"
     })
     .json(user);
 };
